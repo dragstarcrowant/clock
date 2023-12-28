@@ -1,3 +1,23 @@
+const HAND_WIDTH = 250;
+
+const calcHandTransform = () => {
+  const date = new Date();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+
+  return {
+    handTransform: `rotate(${((360 / 24 * hours - 90)) % 360}deg) translate(0, -50%)`,
+    handWidth: `${HAND_WIDTH / 60 * (minutes || 1)}px`
+  }
+};
+
+const calcSecondsSize = () => {
+  const date = new Date();
+  const seconds = date.getSeconds();
+
+  return `${(seconds + 1) / 60 * 100}%`;
+}
+
 const createElementWithAttr = (el, attrs) => {
   const htmlEl = document.createElement(el);
   const attrKeys = Object.keys(attrs);
@@ -11,42 +31,38 @@ const createElementWithAttr = (el, attrs) => {
   return htmlEl;
 };
 
-const tick = (hand) => {
-  const date = new Date();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const handWidth = 250;
+const tick = (hand, secondsCircle) => {
+  const { handTransform, handWidth } = calcHandTransform();
+  const secondsSize = calcSecondsSize();
 
-  hand.style.transform = `rotate(${((360 / 24 * hours - 90)) % 360}deg) translate(0, -50%)`;
-  hand.style.width = `${handWidth / 60 * minutes}px`;
+  hand.style.transform = handTransform;
+  hand.style.width = handWidth;
+
+  secondsCircle.style.width = secondsSize;
+  secondsCircle.style.height = secondsSize;
 };
 
 const main = () => {
   const clock = document.querySelector('.clock_i');
   const hand = createElementWithAttr('div', { class: 'hand' });
+  const secondsCircle = createElementWithAttr('div', { class: 'seconds-circle' });
 
   const circles = new Array(6).fill(null).map((c) => {
     return createElementWithAttr('div', { class: 'circle' });
   });
 
-  const hourMarks = new Array(24).fill(null).map((_, ind, arr) => {
+  const hourLines = new Array(24).fill(null).map((_, ind, arr) => {
     const hourDegree = (360 / arr.length * ind);
 
-    return createElementWithAttr('div', { class: `hour-mark ${ind}`, style: `transform: rotate(${hourDegree}deg) translate(0, -50%); transform-origin: 0 0` })
+    return createElementWithAttr('div', { class: `hour-line hour-line_${ind}`, style: `transform: rotate(${hourDegree - 90}deg) translate(0, -50%); transform-origin: 0 0`, 'data-hour': ind })
   });
 
-  const hourDots = new Array(24).fill(null).map((_, ind, arr) => {
-    const hourDegree = (360 / arr.length * ind) * Math.PI / 180;
+  clock.append(...circles, ...hourLines, hand, secondsCircle);
 
-    return createElementWithAttr('div', { class: `hour-dot ${ind}`, style: `left: ${Math.sin(hourDegree) * 250 + 250}px; top: ${Math.cos(hourDegree) * 250 + 250}px; transform: translate(-50%, -50%); transform-origin: 0 0` })
-  });
-
-  clock.append(...circles, ...hourMarks, hand, ...hourDots);
-
-  tick(hand);
+  tick(hand, secondsCircle);
 
   const timer = setInterval(() => {
-    tick(hand);
+    tick(hand, secondsCircle);
   }, 1000);
 };
 

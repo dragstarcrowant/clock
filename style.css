@@ -63,13 +63,23 @@
   transform: rotate(0deg) translate(0, -50%);
 }
 
-.hour-mark {
+.hour-line {
   position: absolute;
   width: 250px;
   height: 1px;
   background: #edeaea;
   top: 50%;
   left: 50%;
+}
+
+.hour-line:after {
+  position: absolute;
+  top: -8px;
+  right: -19px;
+
+  display: block;
+
+  content: attr(data-hour);
 }
 
 .hour-dot {
@@ -79,4 +89,88 @@
   height: 7px;
   background: #ccc;
   border-radius: 50%;
+}
+
+.seconds-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: #000;
+  border-radius: 50%;
+  z-index: -1;
+
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.hour-line_0:after {
+  transform: rotate(90deg);
+}
+.hour-line_1:after {
+  transform: rotate(75deg);
+}
+.hour-line_2:after {
+  transform: rotate(60deg);
+}
+.hour-line_3:after {
+  transform: rotate(45deg);
+}
+.hour-line_4:after {
+  transform: rotate(30deg);
+}
+.hour-line_5:after {
+  transform: rotate(15deg);
+}
+.hour-line_6:after {
+  transform: rotate(0deg);
+}
+.hour-line_7:after {
+  transform: rotate(-15deg);
+}
+.hour-line_8:after {
+  transform: rotate(-30deg);
+}
+.hour-line_9:after {
+  transform: rotate(-45deg);
+}
+.hour-line_10:after {
+  transform: rotate(-60deg);
+}
+.hour-line_11:after {
+  transform: rotate(-75deg);
+}
+.hour-line_12:after {
+  transform: rotate(-90deg);
+}
+.hour-line_13:after {
+  transform: rotate(-105deg);
+}
+.hour-line_14:after {
+  transform: rotate(-120deg);
+}
+.hour-line_15:after {
+  transform: rotate(-135deg);
+}
+.hour-line_16:after {
+  transform: rotate(-150deg);
+}
+.hour-line_17:after {
+  transform: rotate(-165deg);
+}
+.hour-line_18:after {
+  transform: rotate(-180deg);
+}
+.hour-line_19:after {
+  transform: rotate(-195deg);
+}
+.hour-line_20:after {
+  transform: rotate(-210deg);
+}
+.hour-line_21:after {
+  transform: rotate(-225deg);
+}
+.hour-line_22:after {
+  transform: rotate(-240deg);
+}
+.hour-line_23:after {
+  transform: rotate(-255deg);
 }
